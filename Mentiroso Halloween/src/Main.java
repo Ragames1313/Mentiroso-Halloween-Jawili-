@@ -13,7 +13,7 @@ public class Main {
         return rnd.nextInt((maxValue + 1) - minValue) + minValue;
     }
 
-    // Para generar nummeros aleatorios en la manos (de cartas)
+    // Para generar nummeros aleatorios en la manos (de calabazas)
     public static void rellenarManos (int[][] manos) {
         for (int i = 0; i < manos.length; i++) {    // Recorre la columna
             for (int j = 0; j < manos[i].length; j++) {   // Ponemos manos[i].length en vez de 5 (recorre la fila)
@@ -63,7 +63,7 @@ public class Main {
 
         int turno = 1;
 
-        // Inicializamos la mesa con -1 porq 0 es una carta fantasma
+        // Inicializamos la mesa con -1 porq 0 es una calabaza fantasma
         for (int j = 0; j < cartasPorJugador; j++){
             mesa[0][j] = -1;
         }
@@ -73,8 +73,8 @@ public class Main {
         // Reglas del juego
         System.out.println("\n--¡BIENVENIDO A MENTIROSO HALLOWEEN!--");
         System.out.println("   Reglas del juego (resumen):");
-        System.out.println(" * Cada jugador tiene 5 cartas (0 a 6).");
-        System.out.println(" * Por turnos, los jugadores ponen cartas en la mesa.");
+        System.out.println(" * Cada jugador tiene 5 calabazas (0 a 6).");
+        System.out.println(" * Por turnos, los jugadores ponen calabazas en la mesa.");
         System.out.println(" * El siguiente jugador decide si es mentira.\n"); //Salto de linea "\n"
 
         // Repartimos cartas
@@ -90,7 +90,7 @@ public class Main {
            if (turno % 2 != 0){
                System.out.print("Turno del jugador 1! \n");
 
-               // Pregunta al usuario si quiere sacar las calabazas y asignarlas a la mesa en cuyo caso
+               // Pregunta al usuario si quiere sacar las cartas y asignarlas a la mesa en cuyo caso
                // Deberia ser sustituido por un boleano para mejorar el codigo
                for (int j = 0; j < cartasPorJugador; j++) {
                    System.out.print("Tu " + (j+1) + "ª calabaza vale" + mano[0][j] + " ¿Quieres tirarla? \n (1 = SI 2 = NO) ");
