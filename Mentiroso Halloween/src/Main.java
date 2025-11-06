@@ -117,14 +117,14 @@ public class Main {
                 if (mano[jugadorActual][j] != -1) {
                     System.out.print("Tu " + (j + 1) + "ª calabaza vale " + mano[jugadorActual][j] + ". ¿Quieres tirarla, si o no? ");
 
-                    String respuestaTexto = sc.next().trim().toLowerCase();
+                    String respuestaTexto = sc.next().trim().toLowerCase(); // Al usar toLowerCase abarca todas las minusculas y mayusculas del string
                     int respuesta;
 
-                    if (respuestaTexto.equals ("1") || respuestaTexto.equals("si") || respuestaTexto.equals("SI") || respuestaTexto.equals("Si")){
+                    if (respuestaTexto.equals ("1") || respuestaTexto.equals("si")){
                         respuesta = 1;
                     }
 
-                    else if (respuestaTexto.equals ("2") || respuestaTexto.equals("no") || respuestaTexto.equals("NO") || respuestaTexto.equals("No")){
+                    else if (respuestaTexto.equals ("2") || respuestaTexto.equals("no")){
                         respuesta = 2;
                     }
 
@@ -147,23 +147,39 @@ public class Main {
                 continue;
             }
 
-            // Declarar el valor de las calabazas jugadas
-            System.out.print("Declara el valor de tus " + tiradas + " calabaza(s) (0-6): ");
-            int valorDeclarado = sc.nextInt();
+//            // Declarar el valor de las calabazas jugadas
+//            System.out.print("Declara el valor de tus " + tiradas + " calabaza(s) (0-6): ");
+//            int valorDeclarado = sc.nextInt();
 
+            // Hice testeo del juego y la sintetizacion de este codigo rompe el juego
+            int valorDeclarado = -1;
+            while (valorDeclarado < 0 || valorDeclarado > 6) {
+                System.out.print("Declara el valor de tus " + tiradas + " calabaza(s) (0-6): ");
+                if (sc.hasNextInt()) {
+                    valorDeclarado = sc.nextInt();
+                    if (valorDeclarado < 0 || valorDeclarado > 6) {
+                        System.out.println("Valor fuera de rango. Debe estar entre 0 y 6.");
+                    }
+                } else {
+                    System.out.println("Eso no es un número válido.");
+                    sc.next(); // consumir lo que sea que haya escrito
+                }
+            }
+
+            
             mostrarMesa(mesa);
 
             int decision = 0;
             while (decision == 0){
             // El otro jugador decide
-                System.out.println("Jugador " + (otroJugador + 1) + ", ¿Crees al jugador número" + (jugadorActual + 1) + " o dudas? ");
+                System.out.print("Jugador " + (otroJugador + 1) + ", ¿Crees al jugador número " + (jugadorActual + 1) + " o dudas? ");
                 String respuestaTexto = sc.next().trim().toLowerCase();
 
-                if (respuestaTexto.equals ("1") || respuestaTexto.equals("creo") || respuestaTexto.equals("CREO") || respuestaTexto.equals("Creo")){
+                if (respuestaTexto.equals ("1") || respuestaTexto.equals("creo")){
                     decision = 1;
                 }
 
-                else if (respuestaTexto.equals ("2") || respuestaTexto.equals("dudo") || respuestaTexto.equals("DUDO") || respuestaTexto.equals("Dudo")){
+                else if (respuestaTexto.equals ("2") || respuestaTexto.equals("dudo")){
                     decision = 2;
                 }
 
