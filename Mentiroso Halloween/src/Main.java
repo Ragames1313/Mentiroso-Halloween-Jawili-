@@ -129,9 +129,9 @@ public class Main {
                         String respuestaTexto = sc.next().trim().toLowerCase(); // Al usar toLowerCase abarca todas las minusculas y mayusculas del string y trim elimina espacios
                         int respuesta;
 
-                        if (respuestaTexto.equals("1") || respuestaTexto.equals("si")) {
+                        if (respuestaTexto.equals("si")) {
                             respuesta = 1;
-                        } else if (respuestaTexto.equals("2") || respuestaTexto.equals("no")) {
+                        } else if (respuestaTexto.equals("no")) {
                             respuesta = 2;
                         } else {
                             System.out.println("¿INTENTAS HACER TRAMPAS? interpretamos tu respuesta como un NO");
@@ -186,9 +186,9 @@ public class Main {
                     System.out.print("Jugador " + (otroJugador + 1) + ", ¿Crees al jugador número " + (jugadorActual + 1) + " o dudas? ");
                     String respuestaTexto = sc.next().trim().toLowerCase();
 
-                    if (respuestaTexto.equals("1") || respuestaTexto.equals("creo")) {
+                    if (respuestaTexto.equals("creo")) {
                         decision = 1;
-                    } else if (respuestaTexto.equals("2") || respuestaTexto.equals("dudo")) {
+                    } else if (respuestaTexto.equals("dudo")) {
                         decision = 2;
                     } else {
                         System.out.println("¿INTENTAS HACER TRAMPAS? interpretamos tu respuesta como que le crees");
@@ -249,14 +249,14 @@ public class Main {
             System.out.print("\n¿Quieres jugar otra partida, si o no? ");
             String respuestaTexto = sc.next().trim().toLowerCase();
 
-            if (respuestaTexto.equals("1") || respuestaTexto.equals("si")) {
+            if (respuestaTexto.equals("si")) {
                 jugarDeNuevo = true;
                 System.out.println("\n¡Prueba otra vez!\n");
-            } else if (respuestaTexto.equals("2") || respuestaTexto.equals("no")) {
+            } else if (respuestaTexto.equals("no")) {
                 jugarDeNuevo = false;
                 System.out.println("Gracias por jugar a MENTIROSO HALLOWEEN");
             } else {
-                System.out.println("¿INTENTAS HACER TRAMPAS? interpretamos tu respuesta como un NO");
+                System.out.println("¿PERO QUE HAS ESCRITO? interpretamos tu respuesta como un NO");
                 jugarDeNuevo = false;
                 System.out.println("Gracias por jugar a MENTIROSO JAWILIN");
             }
