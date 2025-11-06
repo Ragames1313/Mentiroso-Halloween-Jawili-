@@ -98,11 +98,10 @@ public class Main {
             System.out.println(" * Por turnos, los jugadores ponen calabazas en la mesa.");
             System.out.println(" * El otro jugador decide si creer o dudar...");
             System.out.println(" ¡Y por ultimo... divertíos!");
-
+            
             mostrarManos(mano);
             int turno = 0;
             boolean fin = false;
-
 
             do {
                 int jugadorActual = turno % 2;
