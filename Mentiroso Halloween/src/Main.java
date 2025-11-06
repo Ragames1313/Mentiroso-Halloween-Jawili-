@@ -117,7 +117,7 @@ public class Main {
                 if (mano[jugadorActual][j] != -1) {
                     System.out.print("Tu " + (j + 1) + "ª calabaza vale " + mano[jugadorActual][j] + ". ¿Quieres tirarla, si o no? ");
 
-                    String respuestaTexto = sc.next().trim().toLowerCase(); // Al usar toLowerCase abarca todas las minusculas y mayusculas del string
+                    String respuestaTexto = sc.next().trim().toLowerCase(); // Al usar toLowerCase abarca todas las minusculas y mayusculas del string y trim elimina espacios
                     int respuesta;
 
                     if (respuestaTexto.equals ("1") || respuestaTexto.equals("si")){
@@ -166,7 +166,7 @@ public class Main {
                 }
             }
 
-            
+
             mostrarMesa(mesa);
 
             int decision = 0;
