@@ -154,8 +154,13 @@ public class Main {
                 // Hice testeo del juego y la sintetizacion de este codigo rompe el juego
                 int valorDeclarado = -1;
                 while (valorDeclarado < 0 || valorDeclarado > 6) {
+
                     System.out.print("Declara el valor de tus " + tiradas + " calabaza(s) (0-6): ");
+
+                    // Comprueba si el siguiente valor es numero entero antes de leerlo "sc.hasNextIn"
+                    // Es un tipo de validación que sustituye "try"
                     if (sc.hasNextInt()) {
+                        // Lee el siguiente numero entero, si no da error "nextInt"
                         valorDeclarado = sc.nextInt();
                         if (valorDeclarado < 0 || valorDeclarado > 6) {
                             System.out.println("Valor fuera de rango. Debe estar entre 0 y 6.");
