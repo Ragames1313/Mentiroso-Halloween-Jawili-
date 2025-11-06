@@ -64,182 +64,192 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //Abrimos el Scanner
+        // Abrimos el Scanner
         Scanner sc = new Scanner(System.in);
+        // Abrimos el boleano para que reiniciar el juego al terminar
+        boolean jugarDeNuevo = true;
 
-        // Definimos los dogmas del codigo "final" bloquea la cantidad asignada de la constante
-        final int numJugadores = 2;
-        final int cartasPorJugador = 5;
+        // Insertamos el bucle while para que se siga jugando tras terminar
+        while (jugarDeNuevo) {
 
-        // Matriz mano [2][5]
-        int[][] mano = new int [numJugadores][cartasPorJugador];
+            // Definimos los dogmas del codigo "final" bloquea la cantidad asignada de la constante
+            final int numJugadores = 2;
+            final int cartasPorJugador = 5;
 
-        // Matriz mesa [1][5]
-        int[][] mesa = new int[1][cartasPorJugador];
+            // Matriz mano [2][5]
+            int[][] mano = new int[numJugadores][cartasPorJugador];
+            // Matriz mesa [1][5]
+            int[][] mesa = new int[1][cartasPorJugador];
 
-        rellenarManos(mano);
+            rellenarManos(mano);
 
-        // Inicializamos la mesa con -1 porq 0 es una calabaza fantasma
-        for (int j = 0; j < cartasPorJugador; j++) mesa[0][j] = -1;
-
-        // Reglas del juego
-        System.out.println("\n--¡BIENVENIDO A MENTIROSO HALLOWEEN!--");
-        System.out.println(" * Cada jugador tiene 5 calabazas (0 a 6).");
-        System.out.println(" * Por turnos, los jugadores ponen calabazas en la mesa.");
-        System.out.println(" * El otro jugador decide si creer o dudar...");
-        System.out.println(" ¡Y por ultimo... divertíos!\n");
-
-        mostrarManos(mano);
-        int turno = 0;
-        boolean fin = false;
-
-
-        do {
-            int jugadorActual = turno % 2;
-            int otroJugador = (jugadorActual == 0) ? 1 : 0;
-            System.out.println("Turno del jugador " + (jugadorActual + 1));
-
-
-            // Mostrar su mano
-            System.out.print("Tus calabazas: ");
-            for (int j = 0; j < cartasPorJugador; j++) {
-                if (mano[jugadorActual][j] != -1)
-                    System.out.print(mano[jugadorActual][j] + " ");
-            }
-            System.out.println();
-
-            // Vaciar mesa antes del turno
+            // Inicializamos la mesa con -1 porq 0 es una calabaza fantasma
             for (int j = 0; j < cartasPorJugador; j++) mesa[0][j] = -1;
 
-            // Tirar cartas una a una
-            int tiradas = 0;
-            for (int j = 0; j < cartasPorJugador; j++) {
-                if (mano[jugadorActual][j] != -1) {
-                    System.out.print("Tu " + (j + 1) + "ª calabaza vale " + mano[jugadorActual][j] + ". ¿Quieres tirarla, si o no? ");
-
-                    String respuestaTexto = sc.next().trim().toLowerCase(); // Al usar toLowerCase abarca todas las minusculas y mayusculas del string y trim elimina espacios
-                    int respuesta;
-
-                    if (respuestaTexto.equals ("1") || respuestaTexto.equals("si")){
-                        respuesta = 1;
-                    }
-
-                    else if (respuestaTexto.equals ("2") || respuestaTexto.equals("no")){
-                        respuesta = 2;
-                    }
-
-                    else {
-                        System.out.println("¿INTENTAS HACER TRAMPAS? interpretamos tu respuesta como un NO");
-                        respuesta = 2;
-                    }
-
-                    if (respuesta == 1) {
-                        mesa[0][tiradas] = mano[jugadorActual][j];
-                        mano[jugadorActual][j] = -1;
-                        tiradas++;
-                    }
-                }
-            }
-
-            if (tiradas == 0) {
-                System.out.println("No tiras ninguna calabaza. El turno pasa al otro jugador...");
-                turno++;
-                continue;
-            }
-
-//            // Declarar el valor de las calabazas jugadas
-//            System.out.print("Declara el valor de tus " + tiradas + " calabaza(s) (0-6): ");
-//            int valorDeclarado = sc.nextInt();
-
-            // Hice testeo del juego y la sintetizacion de este codigo rompe el juego
-            int valorDeclarado = -1;
-            while (valorDeclarado < 0 || valorDeclarado > 6) {
-                System.out.print("Declara el valor de tus " + tiradas + " calabaza(s) (0-6): ");
-                if (sc.hasNextInt()) {
-                    valorDeclarado = sc.nextInt();
-                    if (valorDeclarado < 0 || valorDeclarado > 6) {
-                        System.out.println("Valor fuera de rango. Debe estar entre 0 y 6.");
-                    }
-                } else {
-                    System.out.println("Eso no es un número válido.");
-                    sc.next(); // consumir lo que sea que haya escrito
-                }
-            }
-
-
-            mostrarMesa(mesa);
-
-            int decision = 0;
-            while (decision == 0){
-            // El otro jugador decide
-                System.out.print("Jugador " + (otroJugador + 1) + ", ¿Crees al jugador número " + (jugadorActual + 1) + " o dudas? ");
-                String respuestaTexto = sc.next().trim().toLowerCase();
-
-                if (respuestaTexto.equals ("1") || respuestaTexto.equals("creo")){
-                    decision = 1;
-                }
-
-                else if (respuestaTexto.equals ("2") || respuestaTexto.equals("dudo")){
-                    decision = 2;
-                }
-
-                else {
-                    System.out.println("¿INTENTAS HACER TRAMPAS? interpretamos tu respuesta como que le crees");
-                    decision = 1;
-                }
-            }
-            // Comprobamos si el jugador decía la verdad (todas las jugadas coinciden con el valor declarado)
-            boolean diceVerdad = true;
-            for (int j = 0; j < mesa[0].length && mesa[0][j] != -1; j++) {
-                if (mesa[0][j] != valorDeclarado) diceVerdad = false;
-            }
-
-            // detectamos 0 o 6 en las cartas realmente tiradas
-            boolean contiene0 = false;
-            boolean contiene6 = false;
-            for (int j = 0; j < mesa[0].length; j++) {
-                if (mesa[0][j] == 0) contiene0 = true;
-                if (mesa[0][j] == 6) contiene6 = true;
-            }
-
-            // Aplicar consecuencias
-            if (decision == 2) { // duda
-                // Primero: si entre lo que tiraste había un 0, se descubre el fantasma y pierdes toda la mano
-                if (contiene0) {
-                    System.out.println("Era un FANTASMA descubierto. El jugador " + (jugadorActual + 1) + " pierde TODA su mano!");
-                    eliminarCartas(mano, jugadorActual, cartasPorJugador);
-                } else if (!diceVerdad) {
-                    // Si no hay fantasma y no decía la verdad -> mentiroso penalizado
-                    System.out.println("Era MENTIRA. El jugador " + (jugadorActual + 1) + " pierde 1 carta!");
-                    eliminarCartas(mano, jugadorActual, 1);
-                } else {
-                    // Decía la verdad y no había fantasma: comprobar si hay maldita (6)
-                    if (contiene6) {
-                        System.out.println("Era VERDAD y jugó una calabaza MALDITA. El jugador " + (otroJugador + 1) + " pierde 2 cartas!");
-                        eliminarCartas(mano, otroJugador, 2);
-                    } else {
-                        System.out.println("Era VERDAD. El jugador " + (otroJugador + 1) + " pierde 1 carta!");
-                        eliminarCartas(mano, otroJugador, 1);
-                    }
-                }
-            } else {
-                System.out.println("El jugador " + (otroJugador + 1) + " ha decidido CREER. La partida continúa...");
-            }
+            // Reglas del juego
+            System.out.println("\n--¡BIENVENIDO A MENTIROSO HALLOWEEN!--");
+            System.out.println(" * Cada jugador tiene 5 calabazas (0 a 6).");
+            System.out.println(" * Por turnos, los jugadores ponen calabazas en la mesa.");
+            System.out.println(" * El otro jugador decide si creer o dudar...");
+            System.out.println(" ¡Y por ultimo... divertíos!\n");
 
             mostrarManos(mano);
-            fin = sinCartas(mano, 0) || sinCartas(mano, 1);
-            turno++;
+            int turno = 0;
+            boolean fin = false;
 
-        } while (!fin);
 
-        if (sinCartas(mano, 0) && !sinCartas(mano, 1)) {
-            System.out.println("El jugador 1 ha perdido todas sus calabazas. ¡Jugador 2 gana!");
-        } else if (sinCartas(mano, 1) && !sinCartas(mano, 0)) {
-            System.out.println("El jugador 2 ha perdido todas sus calabazas. ¡Jugador 1 gana!");
-        } else {
-            System.out.println("¡Empate!");
+            do {
+                int jugadorActual = turno % 2;
+                int otroJugador = (jugadorActual == 0) ? 1 : 0;
+                System.out.println("Turno del jugador " + (jugadorActual + 1));
+
+
+                // Mostrar su mano
+                System.out.print("Tus calabazas: ");
+                for (int j = 0; j < cartasPorJugador; j++) {
+                    if (mano[jugadorActual][j] != -1)
+                        System.out.print(mano[jugadorActual][j] + " ");
+                }
+                System.out.println();
+
+                // Vaciar mesa antes del turno
+                for (int j = 0; j < cartasPorJugador; j++) mesa[0][j] = -1;
+
+                // Tirar cartas una a una
+                int tiradas = 0;
+                for (int j = 0; j < cartasPorJugador; j++) {
+                    if (mano[jugadorActual][j] != -1) {
+                        System.out.print("Tu " + (j + 1) + "ª calabaza vale " + mano[jugadorActual][j] + ". ¿Quieres tirarla, si o no? ");
+
+                        String respuestaTexto = sc.next().trim().toLowerCase(); // Al usar toLowerCase abarca todas las minusculas y mayusculas del string y trim elimina espacios
+                        int respuesta;
+
+                        if (respuestaTexto.equals("1") || respuestaTexto.equals("si")) {
+                            respuesta = 1;
+                        } else if (respuestaTexto.equals("2") || respuestaTexto.equals("no")) {
+                            respuesta = 2;
+                        } else {
+                            System.out.println("¿INTENTAS HACER TRAMPAS? interpretamos tu respuesta como un NO");
+                            respuesta = 2;
+                        }
+
+                        if (respuesta == 1) {
+                            mesa[0][tiradas] = mano[jugadorActual][j];
+                            mano[jugadorActual][j] = -1;
+                            tiradas++;
+                        }
+                    }
+                }
+
+                if (tiradas == 0) {
+                    System.out.println("No tiras ninguna calabaza. El turno pasa al otro jugador...");
+                    turno++;
+                    continue;
+                }
+
+                //            // Declarar el valor de las calabazas jugadas
+                //            System.out.print("Declara el valor de tus " + tiradas + " calabaza(s) (0-6): ");
+                //            int valorDeclarado = sc.nextInt();
+
+                // Hice testeo del juego y la sintetizacion de este codigo rompe el juego
+                int valorDeclarado = -1;
+                while (valorDeclarado < 0 || valorDeclarado > 6) {
+                    System.out.print("Declara el valor de tus " + tiradas + " calabaza(s) (0-6): ");
+                    if (sc.hasNextInt()) {
+                        valorDeclarado = sc.nextInt();
+                        if (valorDeclarado < 0 || valorDeclarado > 6) {
+                            System.out.println("Valor fuera de rango. Debe estar entre 0 y 6.");
+                        }
+                    } else {
+                        System.out.println("Eso no es un número válido.");
+                        sc.next(); // consumir lo que sea que haya escrito
+                    }
+                }
+
+
+                mostrarMesa(mesa);
+
+                int decision = 0;
+                while (decision == 0) {
+                    // El otro jugador decide
+                    System.out.print("Jugador " + (otroJugador + 1) + ", ¿Crees al jugador número " + (jugadorActual + 1) + " o dudas? ");
+                    String respuestaTexto = sc.next().trim().toLowerCase();
+
+                    if (respuestaTexto.equals("1") || respuestaTexto.equals("creo")) {
+                        decision = 1;
+                    } else if (respuestaTexto.equals("2") || respuestaTexto.equals("dudo")) {
+                        decision = 2;
+                    } else {
+                        System.out.println("¿INTENTAS HACER TRAMPAS? interpretamos tu respuesta como que le crees");
+                        decision = 1;
+                    }
+                }
+                // Comprobamos si el jugador decía la verdad (todas las jugadas coinciden con el valor declarado)
+                boolean diceVerdad = true;
+                for (int j = 0; j < mesa[0].length && mesa[0][j] != -1; j++) {
+                    if (mesa[0][j] != valorDeclarado) diceVerdad = false;
+                }
+
+                // detectamos 0 o 6 en las cartas realmente tiradas
+                boolean contiene0 = false;
+                boolean contiene6 = false;
+                for (int j = 0; j < mesa[0].length; j++) {
+                    if (mesa[0][j] == 0) contiene0 = true;
+                    if (mesa[0][j] == 6) contiene6 = true;
+                }
+
+                // Aplicar consecuencias
+                if (decision == 2) { // duda
+                    // Primero: si entre lo que tiraste había un 0, se descubre el fantasma y pierdes toda la mano
+                    if (contiene0) {
+                        System.out.println("Era un FANTASMA descubierto. El jugador " + (jugadorActual + 1) + " pierde TODA su mano!");
+                        eliminarCartas(mano, jugadorActual, cartasPorJugador);
+                    } else if (!diceVerdad) {
+                        // Si no hay fantasma y no decía la verdad -> mentiroso penalizado
+                        System.out.println("Era MENTIRA. El jugador " + (jugadorActual + 1) + " pierde 1 carta!");
+                        eliminarCartas(mano, jugadorActual, 1);
+                    } else {
+                        // Decía la verdad y no había fantasma: comprobar si hay maldita (6)
+                        if (contiene6) {
+                            System.out.println("Era VERDAD y jugó una calabaza MALDITA. El jugador " + (otroJugador + 1) + " pierde 2 cartas!");
+                            eliminarCartas(mano, otroJugador, 2);
+                        } else {
+                            System.out.println("Era VERDAD. El jugador " + (otroJugador + 1) + " pierde 1 carta!");
+                            eliminarCartas(mano, otroJugador, 1);
+                        }
+                    }
+                } else {
+                    System.out.println("El jugador " + (otroJugador + 1) + " ha decidido CREER. La partida continúa...");
+                }
+
+                mostrarManos(mano);
+                fin = sinCartas(mano, 0) || sinCartas(mano, 1);
+                turno++;
+            } while (!fin);
+
+            if (sinCartas(mano, 0) && !sinCartas(mano, 1)) {
+                System.out.println("El jugador 1 ha perdido todas sus calabazas. ¡Jugador 2 gana!");
+            } else if (sinCartas(mano, 1) && !sinCartas(mano, 0)) {
+                System.out.println("El jugador 2 ha perdido todas sus calabazas. ¡Jugador 1 gana!");
+            } else {
+                System.out.println("¡Empate!");
+            }
+
+            System.out.print("\n¿Quieres jugar otra partida, si o no? ");
+            String respuestaTexto = sc.next().trim().toLowerCase();
+
+            if (respuestaTexto.equals("1") || respuestaTexto.equals("si")) {
+                jugarDeNuevo = true;
+                System.out.println("\n¡Prueba otra vez!\n");
+            } else if (respuestaTexto.equals("2") || respuestaTexto.equals("no")) {
+                jugarDeNuevo = false;
+                System.out.println("Gracias por jugar a MENTIROSO HALLOWEEN");
+            } else {
+                System.out.println("¿INTENTAS HACER TRAMPAS? interpretamos tu respuesta como un NO");
+                jugarDeNuevo = false;
+                System.out.println("Gracias por jugar a MENTIROSO JAWILIN");
+            }
         }
-
         sc.close();
     }
 }
