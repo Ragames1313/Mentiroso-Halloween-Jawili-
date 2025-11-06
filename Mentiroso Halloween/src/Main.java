@@ -176,7 +176,7 @@ public class Main {
                     }
                 }
 
-                saltarLineas(10);
+                saltarLineas(20);
 
                 mostrarMesa(mesa);
 
