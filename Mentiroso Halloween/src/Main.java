@@ -20,6 +20,11 @@ public class Main {
         }
     }
 
+    // Para saltar lineas
+    public static void saltarLineas(int n) {
+        System.out.println(System.lineSeparator().repeat(n));
+    }
+
     // Para mostrar en pantalla las manos de los jugadores
     public static void mostrarManos(int[][] mano){
         for (int i = 0; i < mano.length; i++) {
@@ -92,7 +97,7 @@ public class Main {
             System.out.println(" * Cada jugador tiene 5 calabazas (0 a 6).");
             System.out.println(" * Por turnos, los jugadores ponen calabazas en la mesa.");
             System.out.println(" * El otro jugador decide si creer o dudar...");
-            System.out.println(" ¡Y por ultimo... divertíos!\n");
+            System.out.println(" ¡Y por ultimo... divertíos!");
 
             mostrarManos(mano);
             int turno = 0;
@@ -172,6 +177,7 @@ public class Main {
                     }
                 }
 
+                saltarLineas(10);
 
                 mostrarMesa(mesa);
 
