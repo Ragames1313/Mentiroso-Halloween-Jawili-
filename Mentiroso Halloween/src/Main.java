@@ -98,7 +98,7 @@ public class Main {
             System.out.println(" * Por turnos, los jugadores ponen calabazas en la mesa.");
             System.out.println(" * El otro jugador decide si creer o dudar...");
             System.out.println(" ¡Y por ultimo... divertíos!");
-            
+
             mostrarManos(mano);
             int turno = 0;
             boolean fin = false;
@@ -124,7 +124,7 @@ public class Main {
                 int tiradas = 0;
                 for (int j = 0; j < cartasPorJugador; j++) {
                     if (mano[jugadorActual][j] != -1) {
-                        System.out.print("Tu " + (j + 1) + "ª calabaza vale " + mano[jugadorActual][j] + ". ¿Quieres tirarla, si o no? ");
+                        System.out.print("Tu " + (j + 1) + "ª calabaza vale " + mano[jugadorActual][j] + " ¿Quieres tirarla, si o no? ");
 
                         String respuestaTexto = sc.next().trim().toLowerCase(); // Al usar toLowerCase abarca todas las minusculas y mayusculas del string y trim elimina espacios
                         int respuesta;
