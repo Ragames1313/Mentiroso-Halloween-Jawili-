@@ -93,10 +93,12 @@ public class Main {
         int turno = 0;
         boolean fin = false;
 
+
         do {
             int jugadorActual = turno % 2;
             int otroJugador = (jugadorActual == 0) ? 1 : 0;
             System.out.println("Turno del jugador " + (jugadorActual + 1));
+
 
             // Mostrar su mano
             System.out.print("Tus calabazas: ");
@@ -113,8 +115,24 @@ public class Main {
             int tiradas = 0;
             for (int j = 0; j < cartasPorJugador; j++) {
                 if (mano[jugadorActual][j] != -1) {
-                    System.out.print("Tu " + (j + 1) + "ª calabaza vale " + mano[jugadorActual][j] + ". ¿Quieres tirarla? (1 = SI / 2 = NO): ");
-                    int respuesta = sc.nextInt();
+                    System.out.print("Tu " + (j + 1) + "ª calabaza vale " + mano[jugadorActual][j] + ". ¿Quieres tirarla, si o no? ");
+
+                    String respuestaTexto = sc.next().trim().toLowerCase();
+                    int respuesta;
+
+                    if (respuestaTexto.equals ("1") || respuestaTexto.equals("si") || respuestaTexto.equals("SI") || respuestaTexto.equals("Si")){
+                        respuesta = 1;
+                    }
+
+                    else if (respuestaTexto.equals ("2") || respuestaTexto.equals("no") || respuestaTexto.equals("NO") || respuestaTexto.equals("No")){
+                        respuesta = 2;
+                    }
+
+                    else {
+                        System.out.println("¿INTENTAS HACER TRAMPAS? interpretamos tu respuesta como un NO");
+                        respuesta = 2;
+                    }
+
                     if (respuesta == 1) {
                         mesa[0][tiradas] = mano[jugadorActual][j];
                         mano[jugadorActual][j] = -1;
@@ -135,10 +153,25 @@ public class Main {
 
             mostrarMesa(mesa);
 
+            int decision = 0;
+            while (decision == 0){
             // El otro jugador decide
-            System.out.println("Jugador " + (otroJugador + 1) + ", ¿crees al jugador " + (jugadorActual + 1) + "? (1 = CREO / 2 = DUDO): ");
-            int decision = sc.nextInt();
+                System.out.println("Jugador " + (otroJugador + 1) + ", ¿Crees al jugador número" + (jugadorActual + 1) + " o dudas? ");
+                String respuestaTexto = sc.next().trim().toLowerCase();
 
+                if (respuestaTexto.equals ("1") || respuestaTexto.equals("creo") || respuestaTexto.equals("CREO") || respuestaTexto.equals("Creo")){
+                    decision = 1;
+                }
+
+                else if (respuestaTexto.equals ("2") || respuestaTexto.equals("dudo") || respuestaTexto.equals("DUDO") || respuestaTexto.equals("Dudo")){
+                    decision = 2;
+                }
+
+                else {
+                    System.out.println("¿INTENTAS HACER TRAMPAS? interpretamos tu respuesta como que le crees");
+                    decision = 1;
+                }
+            }
             // Comprobamos si el jugador decía la verdad (todas las jugadas coinciden con el valor declarado)
             boolean diceVerdad = true;
             for (int j = 0; j < mesa[0].length && mesa[0][j] != -1; j++) {
