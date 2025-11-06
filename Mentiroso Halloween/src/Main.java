@@ -23,12 +23,13 @@ public class Main {
     // Para mostrar en pantalla las manos de los jugadores
     public static void mostrarManos(int[][] mano){
         for (int i = 0; i < mano.length; i++) {
-            System.out.print("Mano del jugador " + (i + 1) + ": ");
+//            System.out.print("Mano del jugador " + (i + 1) + ": "); //No las muestro por jugabilidad
             for (int j = 0; j < mano[i].length; j++) {
                 if  (mano[i][j] != -1) {
-                    System.out.print(mano[i][j] + " ");
+//                    System.out.print(mano[i][j] + " ");   //No las muestro por jugabilidad
                 }
             }
+
             System.out.println();
         }
     }
