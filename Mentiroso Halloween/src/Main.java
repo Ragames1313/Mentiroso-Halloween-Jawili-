@@ -174,14 +174,19 @@ public class Main {
                     }
                 }
             } else {
+            // El jugador decide creer
+
                 System.out.println("El jugador " + (otroJugador + 1) + " ha decidido CREER. La partida continúa...");
             }
 
+            // Comprobamos si una de las dos manos esta vacia para terminar o no el bucle
             mostrarManos(mano);
             fin = sinCartas(mano, 0) || sinCartas(mano, 1);
             turno++;
 
         } while (!fin);
+
+        // Decidimos la victoria, si para el jugador uno, dos, o empate, dependiendo de si les quedan cartas o no.
 
         if (sinCartas(mano, 0) && !sinCartas(mano, 1)) {
             System.out.println("El jugador 1 ha perdido todas sus calabazas. ¡Jugador 2 gana!");
